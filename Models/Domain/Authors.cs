@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace LAB1_WEB2_12201039.Models 
+namespace LAB1_WEB2_12201039.Models.Domain
 {
     public class Author
     {

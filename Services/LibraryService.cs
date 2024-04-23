@@ -1,5 +1,5 @@
 ﻿using LAB1_WEB2_12201039.Data;
-using LAB1_WEB2_12201039.Models;
+using LAB1_WEB2_12201039.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace LAB1_WEB2_12201039.Services
