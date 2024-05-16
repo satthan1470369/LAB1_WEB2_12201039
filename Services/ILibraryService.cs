@@ -17,10 +17,10 @@ namespace LAB1_WEB2_12201039.Services
         Task<Author> UpdateAuthorAsync(Author author);
         Task<bool> DeleteAuthorAsync(int id);
 
-        Task<List<Publishers>> GetPublishersAsync();
-        Task<Publishers> GetPublisherAsync(int id);
-        Task<Publishers> AddPublisherAsync(Publishers publisher);
-        Task<Publishers> UpdatePublisherAsync(Publishers publisher);
+        Task<List<Publisher>> GetPublishersAsync();
+        Task<Publisher> GetPublisherAsync(int id);
+        Task<Publisher> AddPublisherAsync(Publisher publisher);
+        Task<Publisher> UpdatePublisherAsync(Publisher publisher);
         Task<bool> DeletePublisherAsync(int id);
     }
 

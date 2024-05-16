@@ -83,24 +83,24 @@ namespace LAB1_WEB2_12201039.Services
             return true;
         }
         // Publisher Services
-        public async Task<List<Publishers>> GetPublishersAsync()
+        public async Task<List<Publisher>> GetPublishersAsync()
         {
             return await _context.Publishers.ToListAsync();
         }
 
-        public async Task<Publishers> GetPublisherAsync(int id)
+        public async Task<Publisher> GetPublisherAsync(int id)
         {
             return await _context.Publishers.FindAsync(id);
         }
 
-        public async Task<Publishers> AddPublisherAsync(Publishers publisher)
+        public async Task<Publisher> AddPublisherAsync(Publisher publisher)
         {
             _context.Publishers.Add(publisher);
             await _context.SaveChangesAsync();
             return publisher;
         }
 
-        public async Task<Publishers> UpdatePublisherAsync(Publishers publisher)
+        public async Task<Publisher> UpdatePublisherAsync(Publisher publisher)
         {
             _context.Entry(publisher).State = EntityState.Modified;
             await _context.SaveChangesAsync();

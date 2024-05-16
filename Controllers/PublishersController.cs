@@ -1,5 +1,8 @@
-﻿using LAB1_WEB2_12201039.Models.Domain;
-using LAB1_WEB2_12201039.Services;
+﻿using LAB1_WEB2_12201039.Data;
+using LAB1_WEB2_12201039.Models.Domain;
+using LAB1_WEB2_12201039.Models.DTO;
+using LAB1_WEB2_12201039.Repositories;
+//using LAB1_WEB2_12201039.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LAB1_WEB2_12201039.Controllers
@@ -8,63 +11,47 @@ namespace LAB1_WEB2_12201039.Controllers
     [Route("api/[controller]")]
     public class PublishersController : ControllerBase
     {
-        private readonly ILibraryService _libraryService;
-
-        public PublishersController(ILibraryService libraryService)
+        private readonly AppDbContext _dbContext;
+        private readonly IPublisherRepository _publisherRepository;
+        public PublishersController(AppDbContext dbContext, IPublisherRepository
+       publisherRepository)
         {
-            _libraryService = libraryService;
+            _dbContext = dbContext;
+            _publisherRepository = publisherRepository;
         }
-
-        // GET: api/publishers
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Publishers>>> GetPublishers()
+        [HttpGet("get-all-publisher")]
+        public IActionResult GetAllPublisher()
         {
-            var publishers = await _libraryService.GetPublishersAsync();
-            return Ok(publishers);
+            var allPublishers = _publisherRepository.GetAllPublishers();
+            return Ok(allPublishers);
         }
-
-        // GET: api/publishers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Publishers>> GetPublisher(int id)
+        [HttpGet("get-publisher-by-id")]
+        public IActionResult GetPublisherById(int id)
         {
-            var publisher = await _libraryService.GetPublisherAsync(id);
-            if (publisher == null)
-            {
-                return NotFound();
-            }
-            return publisher;
+            var publisherWithId = _publisherRepository.GetPublisherById(id);
+            return Ok(publisherWithId);
         }
-
-        // POST: api/publishers
-        [HttpPost]
-        public async Task<ActionResult<Publishers>> PostPublisher(Publishers publisher)
+        [HttpPost("add-publisher")]
+        public IActionResult AddPublisher([FromBody] AddPublisherRequestDTO
+       addPublisherRequestDTO)
         {
-            var newPublisher = await _libraryService.AddPublisherAsync(publisher);
-            return CreatedAtAction(nameof(GetPublisher), new { id = newPublisher.PublisherID }, newPublisher);
+            var publisherAdd = _publisherRepository.AddPublisher(addPublisherRequestDTO);
+            return Ok(publisherAdd);
         }
-
-        // PUT: api/publishers/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPublisher(int id, Publishers publisher)
+        [HttpPut("update-publisher-by-id/{id}")]
+        public IActionResult UpdatePublisherById(int id, [FromBody] PublisherNoIdDTO
+       publisherDTO)
         {
-            if (id != publisher.PublisherID)
-            {
-                return BadRequest();
-            }
-            await _libraryService.UpdatePublisherAsync(publisher);
-            return NoContent();
+            var publisherUpdate = _publisherRepository.UpdatePublisherById(id,
+           publisherDTO);
+
+            return Ok(publisherUpdate);
         }
-
-        // DELETE: api/publishers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePublisher(int id)
+        [HttpDelete("delete-publisher-by-id/{id}")]
+        public IActionResult DeletePublisherById(int id)
         {
-            var result = await _libraryService.DeletePublisherAsync(id);
-            if (!result)
-            {
-                return NotFound();
-            }
-            return NoContent();
+            var publisherDelete = _publisherRepository.DeletePublisherById(id);
+            return Ok();
         }
     }
 

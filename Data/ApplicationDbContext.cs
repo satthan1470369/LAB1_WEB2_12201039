@@ -11,23 +11,24 @@ namespace LAB1_WEB2_12201039.Data
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<Publishers> Publishers { get; set; }
-        public DbSet<BookAuthors> BookAuthorss { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<BookAuthors> BookAuthors { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BookAuthors>()
-                .HasKey(ba => new { ba.BookID, ba.AuthorID });
+                .HasKey(ba => new { ba.BookId, ba.AuthorId });
 
             modelBuilder.Entity<BookAuthors>()
                 .HasOne(ba => ba.Book)
                 .WithMany(b => b.BookAuthors)
-                .HasForeignKey(ba => ba.BookID);
+                .HasForeignKey(ba => ba.BookId);
 
             modelBuilder.Entity<BookAuthors>()
                 .HasOne(ba => ba.Author)
                 .WithMany(a => a.BookAuthors)
-                .HasForeignKey(ba => ba.AuthorID);
+                .HasForeignKey(ba => ba.AuthorId);
         }
     }
 }
